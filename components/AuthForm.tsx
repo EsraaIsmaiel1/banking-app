@@ -18,6 +18,7 @@ const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const formSchema = authFormSchema(type);
 
@@ -32,6 +33,7 @@ const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
+    setErrorMessage('');
 
     try {
       // Sign up with Appwrite & create plaid token
@@ -49,18 +51,28 @@ const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
           password: data.password,
         };
         const newUser = await signUp(userData);
-        setUser(newUser);
+        
+        if (newUser?.error) {
+          setErrorMessage(newUser.error);
+        } else {
+          setUser(newUser);
+        }
       }
       if (type === 'sign-in') {
         const response = await signIn({
           email: data.email,
           password: data.password,
         });
-        console.log(response);
-        if (response) router.push('/');
+        
+        if (response?.error) {
+          setErrorMessage(response.error);
+        } else if (response) {
+          router.push('/');
+        }
       }
     } catch (error) {
       console.log(error);
+      setErrorMessage('An unexpected error occurred.');
     } finally {
       setIsLoading(false);
     }
@@ -177,6 +189,11 @@ const AuthForm = ({ type }: { type: 'sign-in' | 'sign-up' }) => {
                   )}
                 </Button>
               </div>
+              {errorMessage && (
+                <div className="text-red-500 text-sm mt-2 text-center">
+                  {errorMessage}
+                </div>
+              )}
             </form>
           </Form>
 

@@ -1,0 +1,16 @@
+
+> bank-app@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.3
+  - Environments: .env
+
+   Creating an optimized production build ...
+
+warn  - In order to be able to deminify errors, @sentry/nextjs creates sourcemaps and uploads them to the Sentry server. Depending on your deployment setup, this means your original code may be visible in browser devtools in production. To prevent this, set hideSourceMaps to true in the sentry options in your next.config.js. To disable this warning without changing sourcemap behavior, set hideSourceMaps to false. (In @sentry/nextjs version 8.0.0 and beyond, this option will default to true.) See https://webpack.js.org/configuration/devtool/ and https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#use-hidden-source-map for more information.
+
+
+> Build error occurred
+Error: Cannot find 'sentry.client.config.ts' or 'sentry.client.config.js' in 'C:\Users\Issra Ismaiel\Desktop\Codeing Projects\bank-app'.
+    at getUserConfigFile (C:\Users\Issra Ismaiel\Desktop\Codeing Projects\bank-app\node_modules\@sentry\nextjs\cjs\config\webpack.js:569:11)
+    at addSentryToEntryProperty (C:\Users\Issra Ismaiel\Desktop\Codeing Projects\bank-app\node_modules\@sentry\nextjs\cjs\config\webpack.js:518:11)
